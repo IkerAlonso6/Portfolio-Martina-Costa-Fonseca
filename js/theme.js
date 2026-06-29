@@ -24,14 +24,19 @@ const Theme = {
     },
     
     setupToggle() {
-        const btn = document.getElementById('theme-toggle');
-        console.log('Buscando botón theme-toggle:', btn);
-        if (btn) {
-            btn.addEventListener('click', () => {
-                console.log('Botón clickeado');
+        // Usar delegación de eventos para que funcione aunque el botón se re-inyecte
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('#theme-toggle');
+            if (btn) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Botón toggle clickeado - ID:', btn.id);
                 this.toggle();
-            });
-        }
+            } else {
+                // Si el clic no fue en el botón, veamos qué pasó
+                console.log('Click detectado en:', e.target);
+            }
+        });
     },
     
     updateToggleIcon(theme) {

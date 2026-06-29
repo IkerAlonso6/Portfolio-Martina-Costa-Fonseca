@@ -12,7 +12,7 @@ const ProjectDetail = {
         this.currentProject = project;
         this.currentChapterIndex = 0;
         
-        const portfolioPage = document.getElementById('portfolio-page');
+        const portfolioPage = document.getElementById('portfolio-content');
         
         // Determinar proyecto anterior y siguiente
         const prevProject = projectId > 1 ? ProjectLoader.getById(projectId - 1) : null;
