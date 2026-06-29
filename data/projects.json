@@ -1,0 +1,130 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Escuela EITA",
+      "year": "2025",
+      "location": "Córdoba, Argentina",
+      "category": "Educación",
+      "thumbnail": "images/projects/13.png",
+      "description": "El proyecto propone una escuela con una estereoestructura metálica expuesta, donde la misma genera el espacio y define la experiencia. Los tubos verticales funcionan como patios internos que articulan luz, ventilación y encuentro.",
+      "chapters": [
+        {
+          "id": "concepto",
+          "title": "Concepto",
+          "description": "La estereoestructura metálica expuesta como generadora del espacio",
+          "images": [
+            "images/projects/13.png",
+            "images/projects/14.png",
+            "images/projects/15.png"
+          ]
+        },
+        {
+          "id": "renders",
+          "title": "Renders",
+          "description": "Visualizaciones 3D del proyecto",
+          "images": [
+            "images/projects/13.png",
+            "images/projects/15.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Desarrollo Urbano Almafuerte",
+      "year": "2025",
+      "location": "Almafuerte, Argentina",
+      "category": "Urbano",
+      "thumbnail": "images/projects/7.png",
+      "description": "El proyecto plantea un nuevo tejido urbano en torno a macromanzanas residenciales que densifican y estructuran el área. Un parque central articula las distintas actividades.",
+      "chapters": [
+        {
+          "id": "concepto",
+          "title": "Concepto",
+          "description": "Estructura urbana y articulación de espacios",
+          "images": [
+            "images/projects/7.png",
+            "images/projects/8.png",
+            "images/projects/9.png"
+          ]
+        },
+        {
+          "id": "planos",
+          "title": "Planos",
+          "description": "Planos de la propuesta urbana",
+          "images": [
+            "images/projects/7.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Paisaje Almafuerte — Matriz Hídrica",
+      "year": "2025",
+      "location": "Almafuerte, Argentina",
+      "category": "Paisaje",
+      "thumbnail": "images/projects/10.png",
+      "description": "El proyecto parte del agua como estructura territorial y elemento identitario. La matriz hídrica articula áreas naturales, productivas y urbanas mediante espacios recreativos.",
+      "chapters": [
+        {
+          "id": "concepto",
+          "title": "Concepto",
+          "description": "El agua como estructura territorial",
+          "images": [
+            "images/projects/10.png",
+            "images/projects/11.png",
+            "images/projects/12.png"
+          ]
+        },
+        {
+          "id": "detalles",
+          "title": "Detalles",
+          "description": "Detalles de la intervención",
+          "images": [
+            "images/projects/10.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Torres Alta Córdoba",
+      "year": "2024",
+      "location": "Alta Córdoba, Argentina",
+      "category": "Residencial",
+      "thumbnail": "images/projects/1.png",
+      "description": "El proyecto propone dos torres de 12 y 9 pisos que se integran al paisaje urbano de Alta Córdoba. Una piel metálica blanca envuelta en jardines verticales define la imagen del edificio.",
+      "chapters": [
+        {
+          "id": "renders",
+          "title": "Renders",
+          "description": "Visualizaciones del proyecto",
+          "images": [
+            "images/projects/1.png",
+            "images/projects/2.png",
+            "images/projects/3.png"
+          ]
+        },
+        {
+          "id": "planos",
+          "title": "Planos",
+          "description": "Planos arquitectónicos",
+          "images": [
+            "images/projects/1.png",
+            "images/projects/2.png"
+          ]
+        },
+        {
+          "id": "cortes",
+          "title": "Cortes",
+          "description": "Cortes constructivos",
+          "images": [
+            "images/projects/1.png"
+          ]
+        }
+      ]
+    }
+  ]
+}

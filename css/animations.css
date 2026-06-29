@@ -1,0 +1,65 @@
+/* Fade in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide in desde abajo */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade entre proyectos */
+@keyframes projectFade {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade out para transiciones */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-in {
+    animation: fadeIn var(--transition) ease-out;
+}
+
+.slide-in-up {
+    animation: slideInUp var(--transition-slow) ease-out;
+}
+
+.project-enter {
+    animation: projectFade var(--transition) ease-out;
+}
+
+.page-exit {
+    animation: fadeOut var(--transition) forwards;
+}
+
+/* Hover suave */
+.btn, a {
+    transition: all var(--transition);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}

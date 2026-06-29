@@ -1,0 +1,842 @@
+Portfolio Marti
+Pagina de inicio con links a Ig, LinkedIn y Portfolio 
+Portfolio
+info personal y habilidades (No tipo cv sino algo moderno e interactivo)
+Proyectos con miniaturas 
+Paginas dedicadas a proyectos que incluyan descripciones, memorias, detalles, cortes y explicaciones
+Videos de renders 
+
+
+1. ESTRUCTURA DE CARPETAS
+portfolio-arquitecta/
+├── css/                    # Estilos (organizado por sección)
+│   ├── base.css           # Variables, reset, tipografía base
+│   ├── animations.css     # Keyframes y animaciones
+│   ├── theme.css          # Estilos del modo oscuro
+│   ├── landing.css        # Estilos solo para landing
+│   ├── portfolio.css      # Estilos para galería de proyectos
+│   └── project-detail.css # Estilos para detalle de proyecto
+│
+├── js/                     # JavaScript (funcionalidad)
+│   ├── main.js            # Punto de entrada (vacío por ahora)
+│   ├── theme.js           # Lógica: cambiar entre claro/oscuro
+│   ├── router.js          # Lógica: navegar entre páginas
+│   ├── projectLoader.js   # Lógica: cargar datos de proyectos
+│   ├── projectDetail.js   # Lógica: mostrar detalle + capítulos
+│   └── imageOptimizer.js  # Lógica: lazy loading de imágenes
+│
+├── data/
+│   └── projects.json      # Base de datos de los 4 proyectos
+│
+├── images/                # Archivos de imágenes
+│   ├── landing/
+│   ├── projects/
+│   │   ├── proyecto-1/
+│   │   ├── proyecto-2/
+│   │   ├── proyecto-3/
+│   │   └── proyecto-4/
+│   └── icons/
+│
+└── index.html             # Punto de entrada del sitio
+Por qué esta estructura:
+
+Separación de responsabilidades: CSS, JS y datos en carpetas distintas
+Fácil de navegar: Sabés dónde buscar cada cosa
+Escalable: Si crece el proyecto, está organizado
+
+
+2. CSS/BASE.CSS (Variables y Reset)
+Este archivo es el corazón del diseño. Define todas las variables que usas en todo el sitio.
+css:root {
+    /* Colores Light (modo claro) */
+    --color-primary: #8B2C3F;      /* Bordo - color principal */
+    --color-secondary: #F5F5F5;    /* Gris clarito - fondos suave */
+    --color-text: #2C2C2C;         /* Gris oscuro - texto principal */
+    --color-text-light: #666666;   /* Gris medio - texto secundario */
+    --color-border: #E8E8E8;       /* Gris muy clarito - líneas */
+    --color-bg: #FFFFFF;           /* Blanco puro - fondo */
+¿Qué es :root?
+
+Es el selector de HTML raíz
+Las variables acá son globales en todo el sitio
+Se acceden con var(--color-primary) en cualquier lugar
+
+Ejemplo práctico:
+
+Si Martina quiere cambiar bordo de #8B2C3F a otro color, lo cambias UNA sola vez acá
+Automáticamente se actualiza en TODOS lados
+
+css    /* Typography (Tipografía) */
+    --font-sans: 'Inter', sans-serif;      /* Letra para texto normal */
+    --font-display: 'Montserrat', sans-serif; /* Letra para títulos */
+    
+    --text-h1: 3rem;      /* 48px - título principal */
+    --text-h2: 2rem;      /* 32px - títulos secundarios */
+    --text-h3: 1.5rem;    /* 24px - títulos pequeños */
+    --text-body: 1rem;    /* 16px - párrafos normales */
+    --text-small: 0.875rem; /* 14px - texto pequeño */
+¿Por qué variables de tipografía?
+
+3rem = 48px (pero responsivo, se adapta a pantallas)
+clamp() (que usamos después) ajusta automáticamente en móvil
+
+css    /* Spacing (Espaciado) */
+    --space-xs: 0.5rem;   /* 8px - gaps pequeños */
+    --space-sm: 1rem;     /* 16px - espaciado normal */
+    --space-md: 1.5rem;   /* 24px - espaciado medio */
+    --space-lg: 2rem;     /* 32px - espaciado grande */
+    --space-xl: 3rem;     /* 48px - espaciado extra grande */
+Para qué sirve?
+
+En lugar de escribir margin: 24px, escribis margin: var(--space-md)
+Consistencia: Todos los espacios usan la misma escala
+Cambios rápidos: Si querés todo más junito/separado, cambias los valores acá
+
+css    /* Transitions (Animaciones) */
+    --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+Explicación:
+
+300ms = duración (0.3 segundos)
+cubic-bezier(0.4, 0, 0.2, 1) = velocidad de la animación (curva suave)
+--transition-slow para transiciones más lentas (ej: cambio de página)
+
+css/* Dark mode */
+[data-theme="dark"] {
+    --color-bg: #0F0F0F;      /* Casi negro */
+    --color-text: #EEEEEE;    /* Blanco puro (mejor contraste) */
+    --color-text-light: #999999; /* Gris medio */
+    --color-border: #2A2A2A;  /* Gris muy oscuro */
+}
+¿Cómo funciona?
+
+Cuando HTML tiene <html data-theme="dark">...
+Estas variables sobreescriben las del :root
+Con un simple toggle, todo cambia de color
+
+css/* Reset */
+* {
+    margin: 0;      /* Saca márgenes por defecto */
+    padding: 0;     /* Saca padding por defecto */
+    box-sizing: border-box; /* Incluye border+padding en el width */
+}
+¿Por qué reset?
+
+Los navegadores agregan márgenes/paddings por defecto en algunos elementos
+Esto causa inconsistencias
+Empezamos de cero y controlamos todo nosotros
+
+csshtml {
+    scroll-behavior: smooth;  /* Scroll suave al navegar */
+}
+
+body {
+    font-family: var(--font-sans);      /* Usa Inter */
+    color: var(--color-text);           /* Gris oscuro por defecto */
+    background-color: var(--color-bg);  /* Blanco */
+    line-height: 1.6;  /* Distancia entre líneas (legibilidad) */
+    transition: background-color var(--transition), 
+                color var(--transition); /* Anima cambio de tema */
+}
+¿Qué pasa acá?
+
+Cuando cambias a modo oscuro, el fondo anima suavemente a negro
+El texto anima suavemente a blanco
+Eso se ve más profesional que cambiar de golpe
+
+css/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display); /* Todos títulos usan Montserrat */
+    font-weight: 700;   /* Bold */
+    line-height: 1.2;   /* Líneas más juntitas en títulos */
+    margin-bottom: var(--space-md); /* Espacio después de cada título */
+}
+
+h1 { font-size: var(--text-h1); }  /* 3rem = 48px */
+h2 { font-size: var(--text-h2); }  /* 2rem = 32px */
+h3 { font-size: var(--text-h3); }  /* etc */
+cssp {
+    font-size: var(--text-body);
+    margin-bottom: var(--space-md);
+    color: var(--color-text-light);  /* Párrafos ligeramente más gris */
+}
+
+a {
+    color: var(--color-primary);  /* Links en bordo */
+    text-decoration: none;         /* Sin subrayado */
+    transition: color var(--transition); /* Anima color al hover */
+}
+
+a:hover {
+    opacity: 0.8;  /* Se oscurece un poco */
+}
+cssimg {
+    max-width: 100%;  /* Nunca más grande que su contenedor */
+    height: auto;     /* Mantiene proporción */
+    display: block;   /* Saca espacios raros abajo */
+}
+
+button {
+    font-family: var(--font-sans);  /* Mismo tipo de letra */
+    cursor: pointer;  /* Manita al pasar sobre */
+    border: none;     /* Sin bordes raros */
+    background: none; /* Sin fondo por defecto */
+    padding: 0;       /* Sin padding extra */
+}
+css/* Utilities (Clases de ayuda) */
+.container {
+    max-width: 1200px;      /* Máximo ancho */
+    margin: 0 auto;         /* Centrado */
+    padding: 0 var(--space-lg); /* Padding a los lados (responsivo) */
+}
+
+/* Estados de página */
+.page {
+    display: none;   /* Por defecto, escondida */
+    opacity: 0;      /* Transparente (para animaciones) */
+}
+
+.page.active {
+    display: block;  /* Mostrar */
+    opacity: 1;      /* Opaco */
+}
+
+.page.hidden {
+    display: none !important; /* Fuerza display:none */
+}
+
+.hidden {
+    display: none !important;
+}
+
+3. CSS/ANIMATIONS.CSS (Movimiento)
+Este archivo define cómo se mueven las cosas.
+css@keyframes fadeIn {
+    from {
+        opacity: 0;   /* Empieza invisible */
+    }
+    to {
+        opacity: 1;   /* Termina visible */
+    }
+}
+¿Qué es @keyframes?
+
+Define pasos de una animación
+from = estado inicial
+to = estado final
+El navegador anima automáticamente entre medio
+
+css@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Empieza 30px más abajo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* Termina en posición normal */
+    }
+}
+Efecto visual:
+
+El texto sube suavemente mientras aparece
+Eso se ve más profesional que aparecer de golpe
+
+css@keyframes projectFade {
+    from {
+        opacity: 0;
+        transform: translateX(20px);  /* Empieza 20px a la derecha */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);     /* Llega a posición normal */
+    }
+}
+Para qué: Cuando navegas entre proyectos, entran desde la derecha
+css@keyframes pageExit {
+    from {
+        opacity: 1;  /* Empieza visible */
+    }
+    to {
+        opacity: 0;  /* Termina invisible */
+    }
+}
+Ahora aplicamos estas animaciones:
+css.fade-in {
+    animation: fadeIn var(--transition) ease-out;
+}
+/* Significa: 
+   - Usa la animación "fadeIn"
+   - Dura 300ms (var(--transition))
+   - ease-out = empieza rápido, termina lento
+*/
+
+.slide-in-up {
+    animation: slideInUp var(--transition-slow) ease-out;
+}
+
+.project-enter {
+    animation: projectFade var(--transition) ease-out;
+}
+
+.page-exit {
+    animation: pageExit var(--transition) ease-out;
+}
+Uso en HTML:
+html<div class="page fade-in">Esto aparece con fade</div>
+Cuando el JS agregue la clase fade-in, automáticamente anima.
+css.btn {
+    transition: all var(--transition);
+    /* "Anima TODOS los cambios de CSS en 300ms" */
+}
+
+.btn:hover {
+    transform: translateY(-2px);  /* Sube 2px */
+    filter: brightness(0.95);     /* Se oscurece ligeramente */
+}
+Efecto: Al pasar el mouse sobre botón, sube suavemente y se oscurece
+
+4. CSS/THEME.CSS (Modo Oscuro)
+Muy corto pero importante:
+css/* Modo oscuro - variables ya están en base.css [data-theme="dark"] */
+
+/* Ajustes adicionales para mejor contraste en dark */
+[data-theme="dark"] a {
+    color: #D4A574;  /* Links más claros en modo oscuro */
+}
+
+[data-theme="dark"] a:hover {
+    color: #8B2C3F;  /* Al pasar mouse, bordo */
+}
+
+[data-theme="dark"] .btn-theme {
+    background-color: var(--color-border);
+}
+¿Por qué archivo separado?
+
+Mantiene la lógica del tema en un lugar
+Es fácil de modificar después
+No contamina los otros archivos CSS
+
+
+5. CSS/LANDING.CSS (Estilos de la página inicial)
+Este es el más largo. Te lo divido en secciones:
+A) Container y Hero básico
+css.landing-container {
+    min-height: 100vh;      /* Al menos la altura de la pantalla */
+    display: flex;          /* Flexbox para layout */
+    flex-direction: column;  /* Columna vertical */
+    justify-content: space-between; /* Espacio entre hero y footer */
+}
+Efecto: La página ocupa toda la pantalla, el footer está abajo
+css.hero {
+    flex: 1;                 /* Ocupa todo el espacio disponible */
+    display: flex;          
+    align-items: center;    /* Verticalmente centrado */
+    justify-content: center; /* Horizontalmente centrado */
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;     /* Texto centrado */
+}
+Resultado: El contenido del hero está en el medio de la pantalla
+css.hero-content {
+    max-width: 800px;  /* No más de 800px de ancho */
+    animation: slideInUp var(--transition-slow) ease-out;
+    /* Cuando carga, aparece con la animación slideInUp */
+}
+B) Elementos del hero
+css.hero-kicker {
+    font-size: var(--text-small);  /* 14px */
+    color: var(--color-primary);   /* Bordo */
+    font-weight: 600;               /* Semi-bold */
+    text-transform: uppercase;      /* TODO EN MAYÚSCULA */
+    letter-spacing: 0.1em;          /* Espaciado entre letras */
+    margin-bottom: var(--space-md); /* 24px debajo */
+    display: block;                 /* Ocupa una línea completa */
+}
+Uso en HTML:
+html<span class="hero-kicker">Portfolio de Arquitectura</span>
+Eso aparece pequeño, en bordo, mayúsculas.
+css.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    /* clamp(MIN, IDEAL, MAX) = responsive automático
+       MIN: nunca menos de 2.5rem (40px)
+       IDEAL: 8% del ancho de la pantalla
+       MAX: nunca más de 4rem (64px)
+    */
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+}
+Magia del clamp():
+
+En móvil (375px ancho): 8% × 375 = 30px, pero clamp sube a 2.5rem (40px)
+En desktop (1200px): 8% × 1200 = 96px, pero clamp baja a 4rem (64px)
+Automáticamente responsivo sin media queries
+
+css.hero .subtitle {
+    font-size: var(--text-h3);      /* 1.5rem = 24px */
+    color: var(--color-text-light); /* Gris */
+    margin-bottom: var(--space-lg); /* 32px */
+    font-weight: 500;
+}
+
+.hero .location {
+    font-size: var(--text-body);    /* 16px */
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl); /* 48px */
+}
+C) Botones
+css.hero-actions {
+    display: flex;          /* Los botones lado a lado */
+    gap: var(--space-md);   /* 24px entre ellos */
+    justify-content: center; /* Centrados */
+    flex-wrap: wrap;        /* En móvil, se apilan */
+    margin-bottom: var(--space-xl);
+}
+
+.btn-cta {
+    padding: 12px 32px;     /* Espacio dentro del botón */
+    font-size: var(--text-body);
+    font-weight: 600;
+    border-radius: 4px;     /* Esquinas ligeramente redondeadas */
+    transition: all var(--transition); /* Anima todos los cambios */
+    border: 2px solid transparent; /* Borde invisible por defecto */
+}
+
+.btn-primary-cta {
+    background-color: var(--color-primary); /* Fondo bordo */
+    color: white;
+}
+
+.btn-primary-cta:hover {
+    transform: translateY(-3px); /* Sube 3px */
+    background-color: #6B1F2F;   /* Bordo más oscuro */
+    box-shadow: 0 10px 30px rgba(139, 44, 63, 0.2);
+    /* Sombra: 
+       0 = offset horizontal
+       10px = offset vertical (abajo)
+       30px = blur (qué tan difuso)
+       rgba(..., 0.2) = color semitransparente
+    */
+}
+Efecto visual: Botón principal se levanta y hace sombra al pasar mouse
+css.btn-secondary-cta {
+    background-color: transparent;  /* Sin fondo */
+    color: var(--color-primary);    /* Texto en bordo */
+    border-color: var(--color-primary); /* Borde visible */
+}
+
+.btn-secondary-cta:hover {
+    background-color: var(--color-primary); /* Se llena de color */
+    color: white;
+    transform: translateY(-3px);
+}
+Efecto visual: Botón secundario es hueco, se llena al pasar mouse
+D) Enlaces sociales
+css.social-section {
+    display: flex;
+    flex-direction: column;    /* Verticales */
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl); /* Separado del contenido anterior */
+}
+
+.social-text {
+    font-size: var(--text-small);
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.social-links {
+    display: flex;
+    gap: var(--space-lg);       /* Espacio entre iconos */
+    justify-content: center;
+}
+
+.social-links a {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    /* Icon centrado adentro */
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;         /* Círculo */
+    color: var(--color-primary);
+    transition: all var(--transition);
+    font-size: 1.2rem;
+}
+
+.social-links a:hover {
+    background-color: var(--color-primary); /* Se llena */
+    color: white;
+    transform: scale(1.1);  /* Se agranda un 10% */
+}
+Resultado: Circuitos con iconos, se llenan al pasar mouse
+E) Footer y toggle
+css.landing-footer {
+    padding: var(--space-xl) var(--space-lg);
+    border-top: 1px solid var(--color-border); /* Línea arriba */
+    text-align: center;
+}
+
+.theme-toggle {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;         /* Círculo */
+    background-color: transparent;
+    color: var(--color-primary);
+    transition: all var(--transition);
+    cursor: pointer;
+    position: fixed;            /* Se queda fijo en la pantalla */
+    top: var(--space-lg);       /* 32px del top */
+    right: var(--space-lg);     /* 32px del right */
+    z-index: 100;               /* Siempre encima */
+}
+
+.theme-toggle:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: scale(1.1);
+}
+Efecto: Botón fijo en la esquina superior derecha
+F) Responsive
+css@media (max-width: 768px) {
+    /* Cuando la pantalla es menor a 768px (tablets) */
+    
+    .hero {
+        padding: var(--space-xl) var(--space-md);
+        /* Menos padding lateral */
+    }
+
+    .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        /* Más pequeño en móvil */
+    }
+
+    .hero-actions {
+        flex-direction: column;  /* Botones apilados */
+        gap: var(--space-sm);
+    }
+
+    .btn-cta {
+        width: 100%;  /* Ancho completo */
+    }
+
+    .theme-toggle {
+        top: var(--space-md);   /* Más adentro */
+        right: var(--space-md);
+    }
+}
+
+6. INDEX.HTML (La estructura)html<!DOCTYPE html>
+"Este es un documento HTML5" (versión moderna)
+html<html lang="es">
+Idioma es español (para accesibilidad, navegadores, Google)
+html<head>
+    <meta charset="UTF-8">
+Caracteres especiales: Ñ, acentos, etc. funcionan bien
+html    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+Importante para móvil:
+
+width=device-width = ancho de la pantalla (no más pequeño)
+initial-scale=1.0 = zoom inicial 100%
+
+html    <title>Portfolio - Martina Costa Fonseca | Arquitecta</title>
+El título que aparece en la pestaña del navegador
+html    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+Qué hace:
+
+Le dice al navegador que va a pedir fuentes de Google
+preconnect = conecta primero, carga después (más rápido)
+
+html    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+Descarga las fuentes Inter y Montserrat de Google Fonts
+html    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/landing.css" id="landing-styles">
+    <link rel="stylesheet" href="css/portfolio.css" id="portfolio-styles" disabled>
+    <link rel="stylesheet" href="css/project-detail.css" id="detail-styles" disabled>
+Orden es importante:
+
+base.css = variables y reset (base)
+animations.css = animaciones
+theme.css = tema oscuro
+landing.css = estilos específicos landing
+
+id y disabled:
+
+id="landing-styles" = identificador para JS
+disabled en portfolio/detail = no carga esos CSS aún (se activan con JS después)
+
+html</head>
+<body>
+    <div id="app">
+Contenedor principal. Aquí va todo.
+html        <!-- Landing Page -->
+        <div id="landing-page" class="page active">
+La página de landing. Clases:
+
+page = utilidad CSS base
+active = está visible ahora
+
+html            <div class="landing-container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-content">
+<section> = sección semántica (bueno para SEO)
+
+Clases de CSS:
+
+landing-container = contenedor que ocupa 100vh
+hero = flex centrado
+hero-content = max-width 800px
+
+html                        <span class="hero-kicker">Portfolio de Arquitectura</span>
+Pequeño texto arriba. Con clase hero-kicker = estilo de "introducción"
+html                        <h1>Martina Costa Fonseca</h1>
+                        <p class="subtitle">Estudiante de Arquitectura | Diseño y Construcción</p>
+                        <p class="location">Córdoba, Argentina</p>
+Títulos y subtítulos. Clases específicas para diferenciar estilos
+html                        <!-- CTA Buttons -->
+                        <div class="hero-actions">
+CTA = "Call To Action" (botones que invitan a hacer algo)
+html                            <button class="btn-cta btn-primary-cta" data-nav="portfolio">
+                                Ver Portfolio
+                            </button>
+Desglose:
+
+<button> = elemento interactivo
+class="btn-cta btn-primary-cta" = dos clases (una general, una específica)
+data-nav="portfolio" = atributo custom. El JS lo busca: "si clickean esto, ve a portfolio"
+
+html                            <a href="mailto:martucf1@gmail.com" class="btn-cta btn-secondary-cta">
+                                Contactar
+                            </a>
+Link (no botón). href="mailto:..." abre el cliente de email
+html                        <!-- Social Links -->
+                        <div class="social-section">
+                            <p class="social-text">Sígueme</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/martina-costa-fonseca-68a9b938b/" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   title="LinkedIn">
+Atributos:
+
+target="_blank" = abre en pestaña nueva
+rel="noopener noreferrer" = seguridad (no deja que la otra página acceda a window.opener)
+title="LinkedIn" = tooltip al pasar mouse
+
+html                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm..."/>
+                                    </svg>
+SVG = icono en vector (escalable sin perder calidad)
+
+fill="currentColor" = usa el color del texto (por eso cambia en hover)
+html                <!-- Footer -->
+                <footer class="landing-footer">
+                    <p class="footer-text">© 2026 Martina Costa Fonseca. Todos los derechos reservados.</p>
+                </footer>
+<footer> = sección semántica de footer
+html            <!-- Theme Toggle Button -->
+            <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+Atributos:
+
+id="theme-toggle" = identificador único (JS lo busca)
+aria-label="Cambiar tema" = accesibilidad (lectores de pantalla)
+
+html        <!-- Portfolio Page -->
+        <div id="portfolio-page" class="page hidden">
+            <!-- Se llena desde JS -->
+        </div>
+Página portfolio vacía por ahora. hidden = display: none
+html    <!-- Scripts (orden importa) -->
+    <script src="js/theme.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/projectLoader.js"></script>
+    <script src="js/projectDetail.js"></script>
+    <script src="js/imageOptimizer.js"></script>
+    <script src="js/main.js"></script>
+Orden de carga:
+
+theme.js = debe estar primero (aplica tema guardado antes de que el usuario lo vea)
+router.js = navegación
+projectLoader.js = cargar proyectos
+projectDetail.js = mostrar detalles
+imageOptimizer.js = lazy loading
+main.js = inicializa todo
+
+
+7. JS/THEME.JS (Toggle Claro/Oscuro)
+javascriptconst Theme = {
+    storageKey: 'portfolio-theme',
+    prefersDark: window.matchMedia('(prefers-color-scheme: dark)').matches,
+Explicación:
+
+storageKey = clave para guardar en localStorage
+window.matchMedia('(prefers-color-scheme: dark)') = pregunta "¿la SO del usuario prefiere oscuro?"
+.matches = true si sí, false si no
+
+javascript    init() {
+        const saved = localStorage.getItem(this.storageKey);
+        const theme = saved || (this.prefersDark ? 'dark' : 'light');
+        
+        this.apply(theme);
+        this.setupToggle();
+    },
+Flujo:
+
+Intenta obtener tema guardado de localStorage
+Si no existe, usa preferencia del SO
+Aplica ese tema
+Configura el botón toggle
+
+javascript    apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        // Ej: <html data-theme="dark">
+        // Eso activa [data-theme="dark"] en CSS
+        
+        localStorage.setItem(this.storageKey, theme);
+        // Guarda la elección para próxima vez
+        
+        this.updateToggleIcon(theme);
+    },
+Cadena de eventos:
+
+HTML recibe data-theme="dark"
+CSS ve [data-theme="dark"] y aplica esas variables
+Todo el sitio cambia a oscuro
+
+javascript    toggle() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        this.apply(next);
+    },
+Lógica:
+
+Si actual es light → cambia a dark
+Si actual es dark → cambia a light
+
+javascript    setupToggle() {
+        const btn = document.getElementById('theme-toggle');
+        if (btn) {
+            btn.addEventListener('click', () => this.toggle());
+        }
+    },
+Cuando clickean el botón, ejecuta toggle()
+javascriptdocument.addEventListener('DOMContentLoaded', () => Theme.init());
+DOMContentLoaded:
+
+Espera a que HTML se cargue completamente
+Recién ahí inicia Theme
+Sin esto, buscaría elementos que no existen aún
+
+
+8. JS/ROUTER.JS (Navegación)
+javascriptconst Router = {
+    currentPage: 'landing',
+    
+    init() {
+        this.setupEventListeners();
+    },
+currentPage = sigue qué página está visible ahora
+javascript    setupEventListeners() {
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[data-nav="portfolio"]')) {
+                e.preventDefault();
+                this.goTo('portfolio');
+            }
+            if (e.target.matches('[data-nav="back"]')) {
+                e.preventDefault();
+                this.goTo('portfolio');
+            }
+        });
+    },
+Qué hace:
+
+Escucha TODOS los clicks en la página
+Si el elemento tiene data-nav="portfolio", va a portfolio
+Si tiene data-nav="back", vuelve a portfolio
+e.preventDefault() = si es <a>, no lo sigue como link
+
+javascript    goTo(page) {
+        const current = document.getElementById(`${this.currentPage}-page`);
+        const next = document.getElementById(`${page}-page`);
+        
+        if (!current || !next) return;
+Obtiene los elementos de página actual y siguiente
+javascript        current.classList.add('page-exit');
+        current.classList.remove('active');
+Inicia animación de salida en página actual
+javascript        setTimeout(() => {
+            current.classList.add('hidden');
+            current.classList.remove('page-exit');
+            
+            next.classList.remove('hidden');
+            next.classList.add('fade-in', 'active');
+Después de 300ms (duración de la animación):
+
+Esconde página actual
+Muestra página siguiente
+Agrega clase fade-in que anima la entrada
+
+javascript            window.scrollTo(0, 0);
+            // Sube al top de la página
+            
+            this.currentPage = page;
+            // Actualiza cuál es la página actual
+        }, 300);
+    }
+};
+
+Resumen: Cómo todo funciona junto
+Cuando el sitio carga:
+
+HTML se carga → elementos están en DOM
+CSS se carga → estilos aplicados
+theme.js ejecuta:
+
+Lee localStorage (o SO)
+Aplica tema
+Configura botón
+
+
+router.js ejecuta:
+
+Espera clicks en botones con data-nav
+
+
+Usuario ve: Landing limpia, con tema guardado
+
+Cuando usuario clickea "Ver Portfolio":
+
+Router detecta click en [data-nav="portfolio"]
+Inicia goTo('portfolio')
+Landing anima con fadeOut
+Portfolio anima con fadeIn
+Portfolio muestra (después lo llenaremos con JS)
+
+Cuando usuario clickea tema:
+
+Theme detecta click en #theme-toggle
+Alterna tema (light ↔ dark)
+HTML recibe data-theme="dark"
+CSS ve eso y cambia variables
+Página anima a nuevos colores
+
+
+¿Dónde cambiar qué?
+Quiero cambiarArchivoDóndeColorescss/base.cssVariables en :rootTipografíacss/base.css--font-sans, --font-displayTamaño de fuentescss/base.css--text-h1, --text-body, etcEspaciado generalcss/base.css--space-*Velocidad de animacionescss/base.css--transitionTexto heroindex.html<h1>, <p class="subtitle">, etcLinks socialesindex.html<a href="...">Estilos de botonescss/landing.css.btn-primary-cta, .btn-secondary-ctaTema oscurocss/theme.css[data-theme="dark"]Animacionescss/animations.css@keyframesLógica temajs/theme.jsapply(), toggle()Lógica navegaciónjs/router.jsgoTo()
+
+
+
+Hero section en Landing con animación o video relacionado a arquitectura y botones CTA que lleven a las habilidades o sección personal o al portfolio

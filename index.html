@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Martina Costa Fonseca | Arquitecta</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/landing.css" id="landing-styles">
+    <link rel="stylesheet" href="css/portfolio.css" id="portfolio-styles">
+    <link rel="stylesheet" href="css/project-detail.css" id="detail-styles">
+</head>
+<body>
+    <div id="app">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+
+        <!-- Landing Page -->
+        <div id="landing-page" class="page active">
+            <video autoplay muted loop playsinline class="landing-video">
+                <source src="images/videos/7816243-hd_1920_1080_25fps.mp4" type="video/mp4">
+            </video>
+            <div class="landing-overlay"></div>
+            <div class="landing-container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-content">
+                        <span class="hero-kicker">Portfolio de Arquitectura</span>
+                        <h1>Martina Costa Fonseca</h1>
+                        <p class="subtitle">Estudiante de Arquitectura | Diseño y Construcción</p>
+                        <p class="location">Córdoba, Argentina</p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="hero-actions">
+                            <button class="btn-cta btn-primary-cta" data-nav="portfolio">
+                                Ver Portfolio
+                            </button>
+                            <!-- <a href="mailto:martucf1@gmail.com" class="btn-cta btn-secondary-cta">
+                                Contactar
+                            </a> -->
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="social-section">
+                            <p class="social-text">Sígueme</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/martina-costa-fonseca-68a9b938b/" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   title="LinkedIn">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                    </svg>
+                                </a>
+                                <a href="mailto:martucf1@gmail.com" 
+                                   title="Email">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                    </svg>
+                                </a>
+                                <a href="tel:3516061911" 
+                                   title="Teléfono">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M17.707 12.293l-5.293-5.293a1 1 0 0 0-1.414 0l-5.293 5.293a1 1 0 1 0 1.414 1.414L11 9.414V20a1 1 0 1 0 2 0V9.414l3.293 3.293a1 1 0 0 0 1.414-1.414z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="landing-footer">
+                    <p class="footer-text">© 2026 Martina Costa Fonseca. Todos los derechos reservados.</p>
+                </footer>
+            </div>
+
+            
+        </div>
+        
+        <!-- Portfolio Page -->
+        <div id="portfolio-page" class="page hidden">
+            <!-- Se llena desde JS -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/projectLoader.js"></script>
+    <script src="js/projectDetail.js"></script>
+    <script src="js/imageOptimizer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

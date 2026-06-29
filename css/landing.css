@@ -1,0 +1,228 @@
+/* Estilos para landing page*/
+/* LANDING PAGE STYLES */
+
+#landing-page {
+    color: white;
+}
+
+#landing-page h1 {
+    color: white;
+}
+
+#landing-page .hero-kicker,
+#landing-page .hero .subtitle,
+#landing-page .hero .location,
+#landing-page .social-text,
+#landing-page .footer-text {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#landing-page .social-links a {
+    border-color: white;
+    color: white;
+}
+
+#landing-page .social-links a:hover {
+    background-color: white;
+    color: var(--color-primary);
+}
+
+
+.landing-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.landing-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.landing-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+/* Hero Section */
+.hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    animation: slideInUp var(--transition-slow) ease-out;
+}
+
+.hero-kicker {
+    font-size: var(--text-small);
+    color: var(--color-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-md);
+    display: block;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+}
+
+.hero .subtitle {
+    font-size: var(--text-h3);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-lg);
+    font-weight: 500;
+}
+
+.hero .location {
+    font-size: var(--text-body);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl);
+}
+
+/* CTA Buttons */
+.hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+}
+
+.btn-cta {
+    padding: 12px 32px;
+    font-size: var(--text-body);
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all var(--transition);
+    border: 2px solid transparent;
+}
+
+.btn-primary-cta {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary-cta:hover {
+    transform: translateY(-3px);
+    background-color: #6B1F2F;
+    box-shadow: 0 10px 30px rgba(139, 44, 63, 0.2);
+}
+
+.btn-secondary-cta {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-secondary-cta:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Social Links */
+.social-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.social-text {
+    font-size: var(--text-small);
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.social-links {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+}
+
+.social-links a {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    color: var(--color-primary);
+    transition: all var(--transition);
+    font-size: 1.2rem;
+}
+
+.social-links a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Footer */
+.landing-footer {
+    padding: var(--space-xl) var(--space-lg);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.footer-text {
+    font-size: var(--text-small);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        padding: var(--space-xl) var(--space-md);
+    }
+
+    .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .hero .subtitle {
+        font-size: var(--text-body);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .btn-cta {
+        width: 100%;
+    }
+
+    .social-links {
+        gap: var(--space-md);
+    }
+
+}
